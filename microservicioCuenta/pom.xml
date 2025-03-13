@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.transaccion</groupId>
-	<artifactId>microservicioCliente</artifactId>
+	<artifactId>microservicioCuenta</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>microservicioCliente</name>
-	<description>Demo project for Spring Boot</description>
+	<name>microservicioCuenta</name>
+	<description>Microservicio cuenta</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -79,11 +79,6 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.12.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
