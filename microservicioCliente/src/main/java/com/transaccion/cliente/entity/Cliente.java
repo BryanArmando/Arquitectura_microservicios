@@ -2,6 +2,7 @@ package com.transaccion.cliente.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Entidad cliente
@@ -10,13 +11,11 @@ import lombok.Data;
 @Entity
 @Table(name = "CLIENTE")
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class Cliente extends Persona{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer clienteId;
 
     @Column(name = "CONTRASENIA")
-    private Integer contrasenia;
+    private String contrasenia;
 
     @Column(name = "ESTADO")
     private String estado;

@@ -1,6 +1,8 @@
 package com.transaccion.cliente.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -10,6 +12,7 @@ import lombok.Data;
 @Entity
 @Table(name = "PERSONA")
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Persona {
 
     @Id
