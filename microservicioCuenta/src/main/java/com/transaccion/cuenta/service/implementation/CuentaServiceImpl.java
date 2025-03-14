@@ -40,7 +40,7 @@ public class CuentaServiceImpl implements CuentaService {
         //ClienteResponseDTO clienteEncontrado = producer.esperarRespuesta(cuentaRequestDto.getClienteId());
 
         Cuenta cuentaGuardar = cuentaMapper.requestDtoToEntity(cuentaRequestDto);
-        cuentaGuardar.setEstado("1");
+        cuentaGuardar.setEstado(ConstantesMsCuenta.ESTADO_ACT_NUMERICO);
 //        cuentaGuardar.setClienteId(delproducer);
         Cuenta cuentaCreada = cuentaRepository.save(cuentaGuardar);
         return cuentaMapper.entityToResponseDto(cuentaCreada);
@@ -58,6 +58,9 @@ public class CuentaServiceImpl implements CuentaService {
         Cuenta cuentaExistente = cuentaRepository.findCuentaByIdCuentaAndEstadoIsTrue(id).orElseThrow(() ->
                 new EntityNotFoundException("La cuenta no pudo ser encontrada o está inactiva"));
         if (cuentaUpdateRequestDto.getNumeroCuenta() != null ){
+            if (Boolean.TRUE.equals(cuentaRepository.existsCuentaByNumeroCuenta(cuentaUpdateRequestDto.getNumeroCuenta()))){
+                throw new EntityNotFoundException("El número de cuenta ya se encuentra registrado para otro usuario");
+            }
             cuentaExistente.setNumeroCuenta(cuentaUpdateRequestDto.getNumeroCuenta());
         }
         if (cuentaUpdateRequestDto.getTipoCuenta() != null){
@@ -83,5 +86,10 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public List<CuentaResponseDto> cuentasCliente(Integer clienteID) {
         return cuentaMapper.listEntityToResponseDto(cuentaRepository.findAllByClienteId(clienteID));
+    }
+
+    @Override
+    public CuentaResponseDto validarExistenciaCuenta(Integer cuentaId) {
+        return cuentaRepository.findCuentaByIdCuentaAndEstadoIsTrue(cuentaId).map(cuentaMapper::entityToResponseDto).orElse(null);
     }
 }

@@ -15,4 +15,6 @@ public interface CuentaService {
     void inactivarCuenta(Integer id);
 
     List<CuentaResponseDto> cuentasCliente(Integer clienteID);
+
+    CuentaResponseDto validarExistenciaCuenta(Integer cuentaId);
 }

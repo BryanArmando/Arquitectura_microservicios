@@ -3,6 +3,7 @@ package com.transaccion.cuenta.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ public class Movimientos extends DatosAuditoria{
     private Integer idMovimiento;
 
     @Column(name = "FECHA_CREACION")
-    private Date fechaCreacion;
+    private Timestamp fechaCreacion;
 
     @Column(name = "TIPO_MOVIMIENTO")
     private String tipoMovimiento;
@@ -28,8 +29,8 @@ public class Movimientos extends DatosAuditoria{
     @Column(name = "VALOR")
     private Double valor;
 
-    @Column(name = "SALDO")
-    private Double saldo;
+    @Column(name = "SALDO_INICIAL")
+    private Double saldoInicial;
 
     @Column(name = "ID_CUENTA")
     private Integer idCuenta;

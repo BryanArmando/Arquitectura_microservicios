@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Valid
 @Builder
 @Data
@@ -22,6 +24,6 @@ public class MovimientoRequestDto {
     private String tipoMovimiento;
 
     @NotNull(message = "El valor a registrar es requerido")
-    private Double valor;
+    private BigDecimal valor;
 
 }

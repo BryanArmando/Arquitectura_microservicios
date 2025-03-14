@@ -7,6 +7,10 @@ public final class ConstantesMsCuenta {
 
     public static final String CUENTA_NO_ENCONTRADA = "La cuenta ingresada no fue encontrado o esta inactiva ";
 
+    public static final String RETIRO = "RETIRO";
+    public static final String DEPOSITO = "DEPOSITO";
+
+
     private ConstantesMsCuenta(){
         super();
     }
