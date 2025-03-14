@@ -1,16 +1,17 @@
 package com.transaccion.cliente.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * Entidad cliente
  * @author BryanArmando
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "CLIENTE")
-@Data
 @EqualsAndHashCode(callSuper = true)
 public class Cliente extends Persona{
 
@@ -20,4 +21,9 @@ public class Cliente extends Persona{
     @Column(name = "ESTADO")
     private String estado;
 
+    public Cliente(String nombre, String genero, Integer edad, String identificacion, String direccion, String telefono, String contrasenia, String estado) {
+        super(nombre, genero, edad, identificacion, direccion, telefono);
+        this.contrasenia = contrasenia;
+        this.estado = estado;
+    }
 }

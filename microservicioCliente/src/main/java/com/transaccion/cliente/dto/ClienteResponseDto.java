@@ -1,16 +1,19 @@
 package com.transaccion.cliente.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.Valid;
+import lombok.*;
 
-@Getter
-@Setter
+@Valid
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClienteResponseDto {
 
     private Integer id;
-    private Integer nombre;
+    private String nombre;
     private String genero;
-    private String edad;
+    private Integer edad;
     private String identificacion;
     private String direccion;
     private String telefono;
