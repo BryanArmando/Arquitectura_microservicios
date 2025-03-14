@@ -12,7 +12,7 @@
 	<artifactId>microservicioCliente</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>microservicioCliente</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Microservicio cliente</description>
 	<url/>
 	<licenses>
 		<license/>

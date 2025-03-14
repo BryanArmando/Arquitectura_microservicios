@@ -3,6 +3,8 @@ package com.transaccion.cuenta.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Collection;
+
 /**
  * Entidad cuenta
  * @author BryanArmando
@@ -39,4 +41,14 @@ public class Cuenta extends DatosAuditoria{
             nullable = false
     )
     private String estado;
+
+    /**
+     * Id tabla cliente de microservicio cliente
+     */
+    @Column(name = "CLIENTE_ID")
+    private Integer clienteId;
+
+    @OneToMany(mappedBy = "cuenta")
+    private Collection<Movimientos> movimientos;
+
 }

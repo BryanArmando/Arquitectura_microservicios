@@ -14,4 +14,6 @@ public interface ClienteService {
     void inactivarCliente(Integer id);
 
     List<ClienteResponseDto> clientes();
+
+    ClienteResponseDto buscarPorId(Integer id);
 }

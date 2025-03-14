@@ -1,4 +1,4 @@
-package com.transaccion.cliente.exception;
+package com.transaccion.cuenta.exception;
 
 import java.io.Serial;
 

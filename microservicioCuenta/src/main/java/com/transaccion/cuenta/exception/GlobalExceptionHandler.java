@@ -1,4 +1,4 @@
-package com.transaccion.cliente.exception;
+package com.transaccion.cuenta.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * Validacion y envio de excepcion por validaciones de campos
+     * Validacion y envío de excepción por validaciones de campos
      * @param ex
      * @return
      */

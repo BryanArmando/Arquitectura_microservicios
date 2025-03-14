@@ -93,8 +93,16 @@ public class ClienteServiceImpl implements ClienteService {
         clienteRepository.inactivarCliente(ConstantesCliente.ESTADO_INC_NUMERICO, id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ClienteResponseDto> clientes() {
         return clienteMapper.entityListToResponseDtoList(clienteRepository.findAllByEstadoTrue());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ClienteResponseDto buscarPorId(Integer id) {
+        return clienteRepository.findClienteByIdAndAndEstadoIsTrue(id).map(clienteMapper::entityToResponseDto).orElseThrow( () ->
+                new EntityNotFoundException(ConstantesCliente.CLIENTE_NO_ENCONTRADO));
     }
 }
