@@ -33,8 +33,9 @@ public class CuentaController {
         return ResponseEntity.ok().body("Cuenta desactivada");
     }
 
-    @PostMapping("/buscar/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<CuentaResponseDto> buscarCuentaPorId(@PathVariable("id") Integer id){
+        CuentaResponseDto cuentaResponseDto = cuentaService.validarExistenciaCuenta(id);
         return ResponseEntity.ok(cuentaService.validarExistenciaCuenta(id));
     }
 }

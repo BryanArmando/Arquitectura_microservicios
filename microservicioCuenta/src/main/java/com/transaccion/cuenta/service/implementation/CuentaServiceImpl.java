@@ -1,11 +1,16 @@
 package com.transaccion.cuenta.service.implementation;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.transaccion.cuenta.commons.ConstantesMsCuenta;
+import com.transaccion.cuenta.dto.Cliente.ClienteValidationRequestDto;
+import com.transaccion.cuenta.dto.Cliente.ClienteValidationResponseDto;
 import com.transaccion.cuenta.dto.CuentaRequestDto;
 import com.transaccion.cuenta.dto.CuentaResponseDto;
 import com.transaccion.cuenta.dto.CuentaUpdateRequestDto;
 import com.transaccion.cuenta.entity.Cuenta;
 import com.transaccion.cuenta.exception.EntityNotFoundException;
+import com.transaccion.cuenta.kafka.KafkaConsumerService;
+import com.transaccion.cuenta.kafka.KafkaProducerService;
 import com.transaccion.cuenta.mapper.CuentaMapper;
 import com.transaccion.cuenta.repository.CuentaRepository;
 import com.transaccion.cuenta.service.CuentaService;
@@ -15,7 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Cuenta servicio Implementacion de interfaz
@@ -31,13 +40,34 @@ public class CuentaServiceImpl implements CuentaService {
     @Autowired
     private CuentaMapper cuentaMapper;
 
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
+    @Autowired
+    private KafkaConsumerService kafkaConsumerService;
+
+    private ObjectMapper objectMapper;
+
     @Override
     public CuentaResponseDto crearCuenta(CuentaRequestDto cuentaRequestDto) {
         if (Boolean.TRUE.equals(cuentaRepository.existsCuentaByNumeroCuenta(cuentaRequestDto.getNumeroCuenta()))){
             throw new EntityNotFoundException("El número de cuenta ya se encuentra registrado para otro usuario");
         }
-        //todo crear producer kafka para poder identificar si existe el cliente
-        //ClienteResponseDTO clienteEncontrado = producer.esperarRespuesta(cuentaRequestDto.getClienteId());
+        String requestId = UUID.randomUUID().toString();
+        ClienteValidationRequestDto validationRequest = new ClienteValidationRequestDto(requestId, cuentaRequestDto.getClienteId());
+        CompletableFuture<ClienteValidationResponseDto> futureResponse = kafkaConsumerService.sendValidationRequest(validationRequest);
+
+        ClienteValidationResponseDto validationResponse;
+        try {
+
+            validationResponse = futureResponse.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Error al validar el cliente", e);
+        }
+
+        if (validationResponse.getErrorMessage() != null) {
+            throw new EntityNotFoundException(validationResponse.getErrorMessage());
+        }
 
         Cuenta cuentaGuardar = cuentaMapper.requestDtoToEntity(cuentaRequestDto);
         cuentaGuardar.setEstado(ConstantesMsCuenta.ESTADO_ACT_NUMERICO);
