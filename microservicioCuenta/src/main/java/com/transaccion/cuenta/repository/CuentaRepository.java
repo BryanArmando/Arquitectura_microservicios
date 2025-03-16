@@ -23,5 +23,8 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
 
     List<Cuenta> findAllByClienteId(Integer clienteId);
 
+    @Query("""
+            select c from Cuenta c left join fetch c.movimientos movimientos
+            where c.clienteId = ?1 and movimientos.fechaCreacion between ?2 and ?3 or movimientos is null""")
     List<Cuenta> findByClienteIdAndMovimientosFechaCreacionBetween (Integer clienteId, Timestamp fechaInicio, Timestamp fechaFin);
 }

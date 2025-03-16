@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClienteValidationResponseDto {
     private String requestId;
-    private ClienteResponseDTO clienteResponseDTO;
+    private ClienteResponseDto clienteResponseDto;
     private Integer clienteId;
     private String errorMessage;
 }

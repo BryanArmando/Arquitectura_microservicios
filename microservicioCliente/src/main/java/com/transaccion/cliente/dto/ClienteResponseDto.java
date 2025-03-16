@@ -3,7 +3,6 @@ package com.transaccion.cliente.dto;
 import jakarta.validation.Valid;
 import lombok.*;
 
-@Valid
 @Builder
 @Data
 @AllArgsConstructor

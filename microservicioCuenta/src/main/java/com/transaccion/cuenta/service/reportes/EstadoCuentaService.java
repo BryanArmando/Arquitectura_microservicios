@@ -63,8 +63,8 @@ public class EstadoCuentaService {
         List<Cuenta> cuentasList = cuentaRepository.findByClienteIdAndMovimientosFechaCreacionBetween(clienteId,
                 Timestamp.valueOf(fechaInicio.atStartOfDay()), Timestamp.valueOf(fechaFin.atStartOfDay()));
         EstadoCuentaCabeceraReporteDto estadoCuentaCabeceraReporteDto = new EstadoCuentaCabeceraReporteDto(
-                validationResponse.getClienteResponseDTO().getNombre(),
-                validationResponse.getClienteResponseDTO().getIdentificacion(),
+                validationResponse.getClienteResponseDto().getNombre(),
+                validationResponse.getClienteResponseDto().getIdentificacion(),
                 fechaInicio,
                 fechaFin,null,null
         ) ;
@@ -72,16 +72,7 @@ public class EstadoCuentaService {
             estadoCuentaCabeceraReporteDto.setMensajeError("Cliente no dispone de cuentas asociadas");
         } else {
             estadoCuentaCabeceraReporteDto.setEstadoCuentaTipoCuentaDtoList(cuentaMapper.entityToEstadoCuenta(cuentasList));
-            /*cuentasList.forEach(cuenta -> {
-                if (!CollectionUtils.isEmpty(cuenta.getMovimientos())){
-                    estadoCuentaCabeceraReporteDto.setEstadoCuentaTipoCuentaDtoList();
-                    movimientoMapper.listEntityToEstadoCuentaList(cuenta.getMovimientos());
-                }
-            });*/
         }
-
-
-
 
         return estadoCuentaCabeceraReporteDto;
     }
