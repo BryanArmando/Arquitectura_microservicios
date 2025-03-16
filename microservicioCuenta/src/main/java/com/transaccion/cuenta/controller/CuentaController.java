@@ -4,6 +4,8 @@ import com.transaccion.cuenta.dto.CuentaRequestDto;
 import com.transaccion.cuenta.dto.CuentaResponseDto;
 import com.transaccion.cuenta.dto.CuentaUpdateRequestDto;
 import com.transaccion.cuenta.service.CuentaService;
+import com.transaccion.cuenta.utils.ObtencionIpUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,7 @@ public class CuentaController {
 
     @PostMapping("/eliminar/{id}")
     public ResponseEntity<String> incativarCuenta(@PathVariable("id") Integer id){
-        cuentaService.inactivarCuenta(id);
+        cuentaService.inactivarCuenta(id, ObtencionIpUtils.getIp());
         return ResponseEntity.ok().body("Cuenta desactivada");
     }
 

@@ -28,7 +28,6 @@ public class  KafkaCustomerConfig {
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class.getName());
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.transaccion.cuenta.dto.*,com.transaccion.cliente.dto.*");
-//        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, HashMap.class);
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, "com.transaccion.cliente.dto.ClienteValidationResponseDto");
         return new DefaultKafkaConsumerFactory<>(props);
     }

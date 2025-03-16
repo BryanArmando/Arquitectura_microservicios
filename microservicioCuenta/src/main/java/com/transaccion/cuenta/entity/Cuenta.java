@@ -3,6 +3,7 @@ package com.transaccion.cuenta.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -50,5 +51,8 @@ public class Cuenta extends DatosAuditoria{
 
     @OneToMany(mappedBy = "cuenta")
     private Collection<Movimientos> movimientos;
+
+    @Column(name = "FECHA_CREACION")
+    private Timestamp fechaCreacion;
 
 }

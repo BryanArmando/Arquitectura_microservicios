@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +22,6 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     void inactivarCuenta(@Param("estado") String estado, @Param("id") Integer id);
 
     List<Cuenta> findAllByClienteId(Integer clienteId);
+
+    List<Cuenta> findByClienteIdAndMovimientosFechaCreacionBetween (Integer clienteId, Timestamp fechaInicio, Timestamp fechaFin);
 }

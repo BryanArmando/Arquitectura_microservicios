@@ -36,6 +36,9 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public MovimientoResponseDto registrarMovimiento(MovimientoRequestDto movimientoRequestDto) {
+        if (movimientoRequestDto.getValor().compareTo(BigDecimal.ZERO) ==0) {
+            throw new MonetaryFundsException("Debe ingresar un valor diferente de cero");
+        }
         CuentaResponseDto cuentaTransaccion = cuentaService.validarExistenciaCuenta(movimientoRequestDto.getIdCuenta());
         Movimientos movimientos = new Movimientos();
 
@@ -50,19 +53,18 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         BigDecimal saldoRestante = new BigDecimal("0").setScale(2, RoundingMode.HALF_UP);
         if (movimientoRequestDto.getValor().compareTo(BigDecimal.ZERO) < 0 ){
-            saldoRestante = valorTemporal.subtract(movimientoRequestDto.getValor());// .compareTo(BigDecimal.ZERO) <0
+            saldoRestante = valorTemporal.add(movimientoRequestDto.getValor());// .compareTo(BigDecimal.ZERO) <0
             if (saldoRestante.compareTo(BigDecimal.ZERO)< 0){
                 throw new MonetaryFundsException("No tiene los fondos necesarios para realizar el RETIRO de: " + movimientoRequestDto.getValor() + "$");
             }
             movimientos.setTipoMovimiento(ConstantesMsCuenta.RETIRO);
-//            movimientos.setValor(movimientoRequestDto.getValor().doubleValue());
-//            movimientos.setSaldo(cuentaTransaccion.getSaldoInicial());
         } else {
             saldoRestante = valorTemporal.add(movimientoRequestDto.getValor());
             movimientos.setTipoMovimiento(ConstantesMsCuenta.DEPOSITO);
         }
         movimientos.setValor(movimientoRequestDto.getValor().doubleValue());
         movimientos.setSaldoInicial(cuentaTransaccion.getSaldoInicial());
+        movimientos.setSaldoDisponible(saldoRestante.doubleValue());
         Movimientos movimientoGuardado = movimientoRepository.save(movimientos);
         CuentaUpdateRequestDto cuentaUpdateValueRequestDto = new CuentaUpdateRequestDto();
         cuentaUpdateValueRequestDto.setSaldoInicial(saldoRestante.doubleValue());

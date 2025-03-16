@@ -35,6 +35,9 @@ public class Movimientos extends DatosAuditoria{
     @Column(name = "ID_CUENTA")
     private Integer idCuenta;
 
+    @Column(name = "SALDO_DISPONIBLE")
+    private Double saldoDisponible;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CUENTA", referencedColumnName = "ID_CUENTA", insertable = false, updatable = false)
     private Cuenta cuenta;

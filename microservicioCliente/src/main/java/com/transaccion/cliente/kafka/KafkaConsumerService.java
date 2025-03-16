@@ -37,21 +37,11 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "cliente-validation-request", groupId = "your-group-id")
     public void listenForValidationRequest(ClienteValidationResponseDto message) {
-//        ClienteValidationRequestDto request = objectMapper.convertValue(message, ClienteValidationRequestDto.class);
         ClienteResponseDto clienteResponseDto;
         try {
             clienteResponseDto = clienteService.buscarPorId(message.getClienteId());
-//            Map<String, Object> messageResponse = new HashMap<>();
-//            messageResponse.put("requestId", request.getRequestId());
-//            // Add other fields as necessary
-//            messageResponse.put("clienteResponseDto", clienteResponseDto);
-//            messageResponse.put("errorMessage", null);
             kafkaTemplate.send(RESPONSE_TOPIC, new ClienteValidationResponseDto(message.getRequestId(), clienteResponseDto, message.getClienteId(), null));
         } catch (EntityNotFoundException e) {
-//            Map<String, Object> messageResponse = new HashMap<>();
-//            messageResponse.put("requestId", request.getRequestId());
-//            messageResponse.put("clienteResponseDto", null);
-//            messageResponse.put("errorMessage", e.getMessage());
             kafkaTemplate.send(RESPONSE_TOPIC, new ClienteValidationResponseDto(message.getRequestId(), null, message.getClienteId(), e.getMessage()));
         }
     }

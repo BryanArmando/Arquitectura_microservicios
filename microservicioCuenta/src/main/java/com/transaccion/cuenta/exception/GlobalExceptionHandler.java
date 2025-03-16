@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,9 +53,9 @@ public class GlobalExceptionHandler {
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
 
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-            errors.put(error.getField(), error.getDefaultMessage());
+            errors.add(error.getDefaultMessage());
         }
         body.put("errors", errors);
 
@@ -62,7 +64,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MonetaryFundsException.class)
     public ResponseEntity<Object> handleValidationExceptionFunds(
-            EntityNotFoundException ex, WebRequest request) {
+            MonetaryFundsException ex) {
 
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());

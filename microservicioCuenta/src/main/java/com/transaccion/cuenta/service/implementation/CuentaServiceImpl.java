@@ -1,6 +1,5 @@
 package com.transaccion.cuenta.service.implementation;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.transaccion.cuenta.commons.ConstantesMsCuenta;
 import com.transaccion.cuenta.dto.Cliente.ClienteValidationRequestDto;
 import com.transaccion.cuenta.dto.Cliente.ClienteValidationResponseDto;
@@ -14,13 +13,16 @@ import com.transaccion.cuenta.kafka.KafkaProducerService;
 import com.transaccion.cuenta.mapper.CuentaMapper;
 import com.transaccion.cuenta.repository.CuentaRepository;
 import com.transaccion.cuenta.service.CuentaService;
+import com.transaccion.cuenta.utils.ObtencionIpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -46,12 +48,11 @@ public class CuentaServiceImpl implements CuentaService {
     @Autowired
     private KafkaConsumerService kafkaConsumerService;
 
-    private ObjectMapper objectMapper;
 
     @Override
     public CuentaResponseDto crearCuenta(CuentaRequestDto cuentaRequestDto) {
         if (Boolean.TRUE.equals(cuentaRepository.existsCuentaByNumeroCuenta(cuentaRequestDto.getNumeroCuenta()))){
-            throw new EntityNotFoundException("El número de cuenta ya se encuentra registrado para otro usuario");
+            throw new EntityNotFoundException("El número de cuenta a registrar ya se encuentra asociada a otra cuenta");
         }
         String requestId = UUID.randomUUID().toString();
         ClienteValidationRequestDto validationRequest = new ClienteValidationRequestDto(requestId, cuentaRequestDto.getClienteId());
@@ -59,7 +60,6 @@ public class CuentaServiceImpl implements CuentaService {
 
         ClienteValidationResponseDto validationResponse;
         try {
-
             validationResponse = futureResponse.get();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Error al validar el cliente", e);
@@ -104,12 +104,16 @@ public class CuentaServiceImpl implements CuentaService {
         return cuentaMapper.entityToResponseDto(cuentaCreada);
     }
 
+    @Transactional
     @Override
-    public void inactivarCuenta(Integer id) {
+    public void inactivarCuenta(Integer id, String ip) {
         Optional<Cuenta> cuenta = cuentaRepository.findCuentaByIdCuentaAndEstadoIsTrue(id);
         if (cuenta.isEmpty()){
             throw new EntityNotFoundException("La cuenta ingresada no existe o esta inactiva");
         }
+        cuenta.get().setEstado(ConstantesMsCuenta.ESTADO_INC_NUMERICO);
+        cuenta.get().setFechaModificacion(new Timestamp(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()));
+        cuenta.get().setIpActualizacion(ip);
         cuentaRepository.inactivarCuenta(ConstantesMsCuenta.ESTADO_INC_NUMERICO, cuenta.get().getIdCuenta());
     }
 

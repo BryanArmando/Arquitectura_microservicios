@@ -12,7 +12,7 @@ public interface CuentaService {
 
     CuentaResponseDto editarCuenta(Integer id, CuentaUpdateRequestDto cuentaUpdateRequestDto);
 
-    void inactivarCuenta(Integer id);
+    void inactivarCuenta(Integer id, String ip);
 
     List<CuentaResponseDto> cuentasCliente(Integer clienteID);
 
