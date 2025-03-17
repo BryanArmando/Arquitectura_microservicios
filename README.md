@@ -51,11 +51,10 @@ git clone https://github.com/BryanArmando/Arquitectura_microservicios.git
  cd ..
 ```
 
-3. El repositorio ya contiene el archivo **docker-compose.yml** que contiene los datos necesarios para poder levantar los microservicios incluidos el servidor de mysql y kafka, por lo cual unicamente hay que ejecutar el archivo docker, este al realizar sus procesos para generar la base de datos y las tablas toma el archivo scriptBDD.sql y lo plasma en el contenedor de mysql. Por lo cual, en el directorio raíz ejecutar:
+3. El repositorio ya contiene el archivo **docker-compose.yml** que contiene los datos necesarios para poder levantar los microservicios incluidos el servidor de mysql y kafka, por lo cual,únicamente hay que ejecutar el archivo docker mencionado, en la generación del contenedor mysql se crea la base de datos y las tablas basadas el archivo **scriptBDD.sql** y lo plasma en el contenedor de mysql. Por lo cual, en el directorio raíz ejecutar:
 ```
 docker-compose up -d
 ```
-4. En el repositorio puede encontrar el archivo: 
 
 4. Con ello se inicia el proyecto y se ejecuta de manera local en el puerto 8080 y 8081 para microservicios Cliente y Cuenta respectivamente.
 ```
@@ -76,4 +75,6 @@ Para ejecutar las pruebas de cada microservicios, utilizar el siguiente comando:
   mvn clean test
 ```
 
-> ######  **En caso de tener los puertos a usar por los contenedores activos se debe cerrar los puertos o cambiarlos en el archivo docker para evitar errores** 
+Tambien podrá encontrar el archivo **ArquitecturaMicroservicios.postman_collection.json** que contiene ejemplos de ejecución de cada uno de los endpoints de cada microservicio
+
+> ######  **En caso de tener los puertos a usar por los contenedores activos se debe cerrar los puertos en su sistema o cambiarlos en el archivo docker para evitar errores** 
