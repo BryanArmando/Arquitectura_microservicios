@@ -1,19 +1,17 @@
 package com.transaccion.cuenta.service.implementation;
 
 import com.transaccion.cuenta.commons.ConstantesMsCuenta;
-import com.transaccion.cuenta.dto.Cliente.ClienteValidationRequestDto;
-import com.transaccion.cuenta.dto.Cliente.ClienteValidationResponseDto;
+import com.transaccion.cuenta.dto.cliente.ClienteValidationRequestDto;
+import com.transaccion.cuenta.dto.cliente.ClienteValidationResponseDto;
 import com.transaccion.cuenta.dto.CuentaRequestDto;
 import com.transaccion.cuenta.dto.CuentaResponseDto;
 import com.transaccion.cuenta.dto.CuentaUpdateRequestDto;
 import com.transaccion.cuenta.entity.Cuenta;
 import com.transaccion.cuenta.exception.EntityNotFoundException;
 import com.transaccion.cuenta.kafka.KafkaConsumerService;
-import com.transaccion.cuenta.kafka.KafkaProducerService;
 import com.transaccion.cuenta.mapper.CuentaMapper;
 import com.transaccion.cuenta.repository.CuentaRepository;
 import com.transaccion.cuenta.service.CuentaService;
-import com.transaccion.cuenta.utils.ObtencionIpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,13 +40,14 @@ public class CuentaServiceImpl implements CuentaService {
     @Autowired
     private CuentaMapper cuentaMapper;
 
-    @Autowired
-    private KafkaProducerService kafkaProducerService;
 
     @Autowired
     private KafkaConsumerService kafkaConsumerService;
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CuentaResponseDto crearCuenta(CuentaRequestDto cuentaRequestDto) {
         if (Boolean.TRUE.equals(cuentaRepository.existsCuentaByNumeroCuenta(cuentaRequestDto.getNumeroCuenta()))){
@@ -71,7 +70,6 @@ public class CuentaServiceImpl implements CuentaService {
 
         Cuenta cuentaGuardar = cuentaMapper.requestDtoToEntity(cuentaRequestDto);
         cuentaGuardar.setEstado(ConstantesMsCuenta.ESTADO_ACT_NUMERICO);
-//        cuentaGuardar.setClienteId(delproducer);
         Cuenta cuentaCreada = cuentaRepository.save(cuentaGuardar);
         return cuentaMapper.entityToResponseDto(cuentaCreada);
     }
@@ -104,6 +102,9 @@ public class CuentaServiceImpl implements CuentaService {
         return cuentaMapper.entityToResponseDto(cuentaCreada);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public void inactivarCuenta(Integer id, String ip) {
@@ -117,11 +118,17 @@ public class CuentaServiceImpl implements CuentaService {
         cuentaRepository.inactivarCuenta(ConstantesMsCuenta.ESTADO_INC_NUMERICO, cuenta.get().getIdCuenta());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CuentaResponseDto> cuentasCliente(Integer clienteID) {
         return cuentaMapper.listEntityToResponseDto(cuentaRepository.findAllByClienteId(clienteID));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CuentaResponseDto validarExistenciaCuenta(Integer cuentaId) {
         return cuentaRepository.findCuentaByIdCuentaAndEstadoIsTrue(cuentaId).map(cuentaMapper::entityToResponseDto).orElse(null);

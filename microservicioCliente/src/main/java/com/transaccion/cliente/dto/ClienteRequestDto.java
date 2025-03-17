@@ -4,6 +4,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+/**
+ * Clase DTO de tipo cliente para recepción de datos
+ */
 @Valid
 @Builder
 @Data

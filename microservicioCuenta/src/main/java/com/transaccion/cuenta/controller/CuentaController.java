@@ -5,13 +5,16 @@ import com.transaccion.cuenta.dto.CuentaResponseDto;
 import com.transaccion.cuenta.dto.CuentaUpdateRequestDto;
 import com.transaccion.cuenta.service.CuentaService;
 import com.transaccion.cuenta.utils.ObtencionIpUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Clase controller para entidad Cuenta
+ * @author BryanArmando
+ */
 @RestController
 @RequestMapping("api/clientes")
 public class CuentaController {
@@ -37,7 +40,6 @@ public class CuentaController {
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<CuentaResponseDto> buscarCuentaPorId(@PathVariable("id") Integer id){
-        CuentaResponseDto cuentaResponseDto = cuentaService.validarExistenciaCuenta(id);
         return ResponseEntity.ok(cuentaService.validarExistenciaCuenta(id));
     }
 }

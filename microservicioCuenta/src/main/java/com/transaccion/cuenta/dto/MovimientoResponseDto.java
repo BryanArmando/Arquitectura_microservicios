@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
+/**
+ * Clase DTO de tipo Movimiento para respuetas
+ */
 @Builder
 @Data
 @AllArgsConstructor

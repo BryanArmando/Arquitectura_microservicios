@@ -1,7 +1,7 @@
 package com.transaccion.cuenta.kafka;
 
-import com.transaccion.cuenta.dto.Cliente.ClienteValidationRequestDto;
-import com.transaccion.cuenta.dto.Cliente.ClienteValidationResponseDto;
+import com.transaccion.cuenta.dto.cliente.ClienteValidationRequestDto;
+import com.transaccion.cuenta.dto.cliente.ClienteValidationResponseDto;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Clase service para consumidor kafka
+ */
 @Service
 @Log
 public class KafkaConsumerService {
@@ -19,10 +22,8 @@ public class KafkaConsumerService {
     private KafkaTemplate<String, Object> kafkaTemplate;
     private final ConcurrentHashMap<String, CompletableFuture<ClienteValidationResponseDto>> pendingRequests = new ConcurrentHashMap<>();
 
-    private final ConcurrentHashMap<String, CompletableFuture<ClienteValidationResponseDto>> pendingRequests1 = new ConcurrentHashMap<>();
 
-
-    @KafkaListener(topics = "cliente-validation-response", groupId = "your-group-id")
+    @KafkaListener(topics = "cliente-validation-response", groupId = "msKafBr")
     public void listenForValidationResponse(ClienteValidationResponseDto response) {
         CompletableFuture<ClienteValidationResponseDto> future = pendingRequests.remove(response.getRequestId());
         log.info("respuesta kafka : ");

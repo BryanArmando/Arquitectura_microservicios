@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Clase DTO de tipo Cuenta para recibir datos
+ */
 @Valid
 @Builder
 @Data

@@ -9,10 +9,12 @@ import com.transaccion.cuenta.entity.Movimientos;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import org.mapstruct.Mappings;
 
 import java.util.List;
 
+/**
+ * Interfaz para uso de MapStruct y conversión de entidad a dto
+ */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CuentaMapper {
 

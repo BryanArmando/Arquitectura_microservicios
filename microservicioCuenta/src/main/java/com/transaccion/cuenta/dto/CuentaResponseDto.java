@@ -1,11 +1,13 @@
 package com.transaccion.cuenta.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Clase DTO para envio de datos de tipo cuenta
+ */
 @Builder
 @Data
 @AllArgsConstructor

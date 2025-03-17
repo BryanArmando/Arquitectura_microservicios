@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
+/**
+ * Clase para construccion de estado de cuenta abarca movimientos
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

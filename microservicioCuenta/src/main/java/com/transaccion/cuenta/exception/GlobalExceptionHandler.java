@@ -1,5 +1,6 @@
 package com.transaccion.cuenta.exception;
 
+import com.transaccion.cuenta.commons.ConstantesMsCuenta;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -32,8 +33,8 @@ public class GlobalExceptionHandler {
             EntityNotFoundException ex, WebRequest request) {
 
         Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.CONFLICT.value());
+        body.put(ConstantesMsCuenta.TIMESTAMP, LocalDateTime.now());
+        body.put(ConstantesMsCuenta.STATUS, HttpStatus.CONFLICT.value());
         body.put("error", "Conflict");
         body.put("message", ex.getMessage());
         body.put("path", request.getDescription(false).substring(4));
@@ -50,8 +51,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put(ConstantesMsCuenta.TIMESTAMP, LocalDateTime.now());
+        body.put(ConstantesMsCuenta.STATUS, HttpStatus.BAD_REQUEST.value());
 
         List<String> errors = new ArrayList<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
@@ -67,8 +68,8 @@ public class GlobalExceptionHandler {
             MonetaryFundsException ex) {
 
         Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put(ConstantesMsCuenta.TIMESTAMP, LocalDateTime.now());
+        body.put(ConstantesMsCuenta.STATUS, HttpStatus.BAD_REQUEST.value());
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);

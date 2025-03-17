@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Clase controller para entidad Movimientos
+ * @author BryanArmando
+ */
 @RestController
 @RequestMapping("api/movimientos")
 public class MovimientoController {

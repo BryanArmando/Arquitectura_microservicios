@@ -9,6 +9,9 @@ import org.mapstruct.MappingConstants;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Interfaz para uso de MapStruct y conversión de entidad a dto
+ */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface MovimientoMapper {
     MovimientoResponseDto entityToResponseDto(Movimientos movimientos);

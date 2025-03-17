@@ -1,8 +1,10 @@
 package com.transaccion.cliente.dto;
 
-import jakarta.validation.Valid;
 import lombok.*;
 
+/**
+ * Clase DTO de tipo cliente para envio de datos
+ */
 @Builder
 @Data
 @AllArgsConstructor

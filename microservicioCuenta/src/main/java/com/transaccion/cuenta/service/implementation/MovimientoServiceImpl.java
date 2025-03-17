@@ -22,6 +22,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
+/**
+ * Clase servicio Implementacion de interfaz Movimiento
+ * @author BryanArmando
+ */
 @Service
 public class MovimientoServiceImpl implements MovimientoService {
 
@@ -53,7 +57,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         BigDecimal saldoRestante = new BigDecimal("0").setScale(2, RoundingMode.HALF_UP);
         if (movimientoRequestDto.getValor().compareTo(BigDecimal.ZERO) < 0 ){
-            saldoRestante = valorTemporal.add(movimientoRequestDto.getValor());// .compareTo(BigDecimal.ZERO) <0
+            saldoRestante = valorTemporal.add(movimientoRequestDto.getValor());
             if (saldoRestante.compareTo(BigDecimal.ZERO)< 0){
                 throw new MonetaryFundsException("No tiene los fondos necesarios para realizar el RETIRO de: " + movimientoRequestDto.getValor() + "$");
             }

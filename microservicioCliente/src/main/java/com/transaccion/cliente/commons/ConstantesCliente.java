@@ -1,5 +1,9 @@
 package com.transaccion.cliente.commons;
 
+/**
+ * Clase para definir constates a usar en proyecto
+ * @author BryanArmando
+ */
 public final class ConstantesCliente {
 
     public static final String ESTADO_ACT_NUMERICO = "1";

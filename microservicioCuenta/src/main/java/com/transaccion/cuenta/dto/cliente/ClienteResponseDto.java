@@ -1,10 +1,13 @@
-package com.transaccion.cuenta.dto.Cliente;
+package com.transaccion.cuenta.dto.cliente;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Clase DTO de tipo Cliente para respuestas kafka
+ */
 @Builder
 @Data
 @AllArgsConstructor

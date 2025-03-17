@@ -10,7 +10,6 @@ import com.transaccion.cliente.repository.ClienteRepository;
 import com.transaccion.cliente.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
+ * Clase servicio que implementa funciones para procesos de cliente
  * @author @BryanArmando
  */
 @Service
@@ -36,6 +36,9 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public ClienteResponseDto guardarCliente(ClienteRequestDto clienteRequestDto) {
@@ -46,22 +49,17 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteMapper.entityToResponseDto(clienteCreado);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ClienteResponseDto editarDatosCliente(Integer id, ClienteRequestDto clienteRequestDto) {
-        //todo implementar excepcion personalizada
         Cliente buscarCliente = clienteRepository.findClienteByIdAndAndEstadoIsTrue(id).orElseThrow( () ->
                 new EntityNotFoundException(ConstantesCliente.CLIENTE_NO_ENCONTRADO));
-//        Optional<Cliente> clienteBase = clienteRepository.findClienteByIdAndAndEstadoIsTrue(id);
-//        if (clienteBase.isEmpty()){
-//            throw new EntityNotFoundException(ConstantesCliente.CLIENTE_NO_ENCONTRADO+ id);
-//        }
-        //Cliente clienteObj = clienteMapper.requestDtoToEntity(clienteRequestDto);
-        boolean cambiosDetectados = Boolean.FALSE;
         if (clienteRequestDto.getContrasenia() != null){
             String hashedPassword = passwordEncoder.encode(clienteRequestDto.getContrasenia());
             Boolean comprobarPassword = BCrypt.checkpw(clienteRequestDto.getContrasenia(), buscarCliente.getContrasenia());
             if (Boolean.FALSE.equals(comprobarPassword)){
-                cambiosDetectados = Boolean.TRUE;
                 buscarCliente.setContrasenia(hashedPassword);
             }
         }
@@ -70,11 +68,11 @@ public class ClienteServiceImpl implements ClienteService {
         }
         buscarCliente.setNombre(clienteRequestDto.getNombre());
         buscarCliente.setGenero(clienteRequestDto.getGenero());
-        if (clienteRequestDto.getIdentificacion() != null && !clienteRequestDto.getIdentificacion().equals(buscarCliente.getIdentificacion())){
-            if (Boolean.TRUE.equals(clienteRepository.existsClienteByIdentificacionAndEstadoTrue(clienteRequestDto.getIdentificacion()))){
+        if (clienteRequestDto.getIdentificacion() != null && !clienteRequestDto.getIdentificacion().equals(buscarCliente.getIdentificacion())
+                && Boolean.TRUE.equals(clienteRepository.existsClienteByIdentificacionAndEstadoTrue(clienteRequestDto.getIdentificacion()))){
                 throw new EntityNotFoundException("La identificacion ingresada ya se encuentra registrada en el sistema");
             }
-        }
+
         buscarCliente.setIdentificacion(clienteRequestDto.getIdentificacion());
         buscarCliente.setDireccion(clienteRequestDto.getDireccion());
         buscarCliente.setTelefono(clienteRequestDto.getTelefono());
@@ -85,20 +83,29 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteMapper.entityToResponseDto(clienteAct);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public void inactivarCliente(Integer id) {
-        Cliente clienteExistente = clienteRepository.findClienteByIdAndAndEstadoIsTrue(id).orElseThrow( () ->
+        clienteRepository.findClienteByIdAndAndEstadoIsTrue(id).orElseThrow( () ->
                 new EntityNotFoundException(ConstantesCliente.CLIENTE_NO_ENCONTRADO));
         clienteRepository.inactivarCliente(ConstantesCliente.ESTADO_INC_NUMERICO, id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public List<ClienteResponseDto> clientes() {
         return clienteMapper.entityListToResponseDtoList(clienteRepository.findAllByEstadoTrue());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional(readOnly = true)
     @Override
     public ClienteResponseDto buscarPorId(Integer id) {

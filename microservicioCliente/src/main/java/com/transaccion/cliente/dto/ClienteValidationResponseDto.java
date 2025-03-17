@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Clase DTO de cliente para respuesta con datos a escucha de kafka
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

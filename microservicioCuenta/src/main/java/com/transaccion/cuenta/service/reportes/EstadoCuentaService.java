@@ -1,15 +1,13 @@
 package com.transaccion.cuenta.service.reportes;
 
-import com.transaccion.cuenta.dto.Cliente.ClienteValidationRequestDto;
-import com.transaccion.cuenta.dto.Cliente.ClienteValidationResponseDto;
+import com.transaccion.cuenta.dto.cliente.ClienteValidationRequestDto;
+import com.transaccion.cuenta.dto.cliente.ClienteValidationResponseDto;
 import com.transaccion.cuenta.dto.reportes.EstadoCuentaCabeceraReporteDto;
 import com.transaccion.cuenta.entity.Cuenta;
 import com.transaccion.cuenta.exception.EntityNotFoundException;
 import com.transaccion.cuenta.kafka.KafkaConsumerService;
 import com.transaccion.cuenta.mapper.CuentaMapper;
 import com.transaccion.cuenta.repository.CuentaRepository;
-import com.transaccion.cuenta.repository.MovimientoRepository;
-import com.transaccion.cuenta.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +18,13 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Clase service para generacion de estado de cuenta
+ * @author BryanArmando
+ */
 @Service
 public class EstadoCuentaService {
 
-    @Autowired
-    private MovimientoRepository movimientoRepository;
-
-    @Autowired
-    private CuentaService cuentaService;
 
     @Autowired
     private KafkaConsumerService kafkaConsumerService;
@@ -38,6 +35,13 @@ public class EstadoCuentaService {
     @Autowired
     private CuentaMapper cuentaMapper;
 
+    /**
+     * Obtiene reporte para estado de cuenta en rango de fechas
+     * @param clienteId id de cliente
+     * @param fechaInicio fecha inicial para filtro
+     * @param fechaFin fecha final para filtro
+     * @return reporte
+     */
     public EstadoCuentaCabeceraReporteDto obtenerReporteEstadoCuenta(Integer clienteId, LocalDate fechaInicio, LocalDate fechaFin){
         if (fechaFin.isBefore(fechaInicio)){
             throw new EntityNotFoundException("Rango de fechas ingresado es incorreco");
@@ -65,7 +69,7 @@ public class EstadoCuentaService {
                 fechaFin,null,null
         ) ;
         if (cuentasList.isEmpty()){
-            estadoCuentaCabeceraReporteDto.setMensajeError("Cliente no dispone de cuentas asociadas");
+            estadoCuentaCabeceraReporteDto.setObservacion("Cliente no dispone de cuentas asociadas");
         } else {
             estadoCuentaCabeceraReporteDto.setEstadoCuentaTipoCuentaDtoList(cuentaMapper.entityToEstadoCuenta(cuentasList));
         }

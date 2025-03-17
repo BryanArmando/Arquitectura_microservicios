@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Clase controlador para entidad Cliente
+ * @author BryanArmando
+ */
 @RestController
 @RequestMapping("api/cliente")
 @CrossOrigin(value = "*")

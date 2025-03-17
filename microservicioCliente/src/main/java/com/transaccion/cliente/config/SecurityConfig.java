@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Clase configuracion de spring security
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

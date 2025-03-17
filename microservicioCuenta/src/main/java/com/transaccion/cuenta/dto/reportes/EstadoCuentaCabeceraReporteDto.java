@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Clase general para construcción de reportes de estado de cuenta
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +24,7 @@ public class EstadoCuentaCabeceraReporteDto {
     List<EstadoCuentaTipoCuentaDto> estadoCuentaTipoCuentaDtoList;
 
     @Transient
-    private String mensajeError;
+    private String observacion;
 
 
 

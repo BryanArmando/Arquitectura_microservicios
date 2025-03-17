@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Clase para construcción de estado de cuenta que contiene cuenta y sus movimientos
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
