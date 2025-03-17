@@ -4,17 +4,24 @@ Proyecto de transacciones realizado con microservicios.
 <div align="center">
 <h1> Arquitectura en microservicios
 </h1>
+
+</div>
+
 ![Spring Badge](https://img.shields.io/badge/SpringBoot-20232A?style=for-the-badge&logo=spring&logoColor=green)
 ![Security Badge](https://img.shields.io/badge/SpringSecurity-20232A?style=for-the-badge&logo=springsecurity&logoColor=green)
 ![Swagger Badge](https://img.shields.io/badge/Swagger-20232A?style=for-the-badge&logo=swagger&logoColor=#68b618)
 ![Hibernate Badge](https://img.shields.io/badge/Hibernate-20232A?style=for-the-badge&logo=hibernate&logoColor=yellow)
 ![MYSQL Badge](https://img.shields.io/badge/MySQL-20232A?style=for-the-badge&logo=mysql&logoColor=orange)
 ![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white)
+![Docker Badge](https://img.shields.io/badge/Docker-20232A?style=for-the-badge&logo=docker)
+![Docker Badge](https://img.shields.io/badge/Maven-20232A?style=for-the-badge&logo=maven)
 
-</div>
+# 🔩 Requerimientos
+Para iniciar debe tener disponible git, maven y docker para ejecutar sin problemas cada uno de los microservicios y contenedores
 
 
-#🌟 Sobre el proyecto
+
+# 🌟 Sobre el proyecto
 
 Este proyecto está realizado en microservicios con spring boot, el cual realiza transacciones.
 
