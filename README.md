@@ -67,7 +67,7 @@ http://localhost:8081
 http://localhost:8080/swagger-ui/index.html
 http://localhost:8081/swagger-ui/index.html
 ```
-## ✅ Ejeción de Tests
+## ✅ Ejecución de Tests
 
 Para ejecutar las pruebas de cada microservicios, utilizar el siguiente comando:
 
