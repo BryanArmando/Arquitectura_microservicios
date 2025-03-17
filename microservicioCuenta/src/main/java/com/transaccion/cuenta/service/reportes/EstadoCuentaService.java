@@ -7,13 +7,11 @@ import com.transaccion.cuenta.entity.Cuenta;
 import com.transaccion.cuenta.exception.EntityNotFoundException;
 import com.transaccion.cuenta.kafka.KafkaConsumerService;
 import com.transaccion.cuenta.mapper.CuentaMapper;
-import com.transaccion.cuenta.mapper.MovimientoMapper;
 import com.transaccion.cuenta.repository.CuentaRepository;
 import com.transaccion.cuenta.repository.MovimientoRepository;
 import com.transaccion.cuenta.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -36,8 +34,6 @@ public class EstadoCuentaService {
     @Autowired
     private CuentaRepository cuentaRepository;
 
-    @Autowired
-    private MovimientoMapper movimientoMapper;
 
     @Autowired
     private CuentaMapper cuentaMapper;

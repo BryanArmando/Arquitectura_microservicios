@@ -1,9 +1,11 @@
 package com.transaccion.cliente.entity;
 
 import com.transaccion.cliente.repository.ClienteRepository;
+import com.transaccion.cliente.service.implementation.ClienteServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -21,6 +23,9 @@ public class ClienteTest {
     private Cliente clienteTest;
     @Mock
     ClienteRepository clienteRepository;
+
+    @InjectMocks
+    private ClienteServiceImpl clienteService;
 
     @BeforeEach
     void setClienteTest(){
